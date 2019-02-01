@@ -1,0 +1,4 @@
+1548854782051	Rename type 'OperationsResponse'
+1548854821197	Rename type 'OperationResponse'
+1548855115695	Extract method 'httpEntity'
+1548939563766	Extract local variable 'runnable'

@@ -1,0 +1,66 @@
+package com.operations.client.service;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.IntStream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.operations.client.aspect.LoggingAspect;
+import com.operations.client.dto.ClientOperationResponse;
+
+@Service
+public class OperationService {
+
+	private static final Logger logger = LoggerFactory.getLogger(OperationService.class);
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	public long performAddOperation(int noOfOperations) {
+		
+		AtomicLong finalSum=new AtomicLong(0);	
+		
+		IntStream.range(1, noOfOperations+1).forEach((i)->{finalSum.set(invokeAddService(i)+finalSum.get());});
+		
+		return finalSum.get();
+	}
+	
+	public int invokeAddService(int noOfEach) {
+		String requestURL = "http://localhost:9090/operations/add/{baseNo}/{noOfOperation}";
+		Map<String, String> mapParam = new HashMap<>();
+		mapParam.put("noOfOperation", "" + noOfEach);
+		mapParam.put("baseNo", "" + noOfEach);
+
+		ClientOperationResponse operationResponse = restTemplate.getForObject(requestURL, ClientOperationResponse.class, mapParam);
+		return operationResponse.getResponseRes();
+	}
+
+	public long performMultiThreadAddOperation(int noOfOperations) {
+		AtomicLong finalSum=new AtomicLong(0);	
+		
+		Runnable trTask = ()->{finalSum.set(invokeAddService(i)+finalSum.get());};
+		ExecutorService executor = Executors.newFixedThreadPool(1);
+		
+		IntStream.range(1, noOfOperations+1).forEach((i)->{new Thread(()->{
+			finalSum.set(invokeAddService(i)+finalSum.get());
+			logger.info("Sum Value is :::::::::::: "+finalSum.get());
+		}).start();});
+		
+		return finalSum.get();
+	}
+
+	/*private HttpEntity<String> httpEntity() {
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+	    HttpEntity <String> entity = new HttpEntity<String>(headers);
+		return entity;
+	}*/
+
+}

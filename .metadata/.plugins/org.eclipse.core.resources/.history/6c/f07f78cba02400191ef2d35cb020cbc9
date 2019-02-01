@@ -1,0 +1,25 @@
+package com.operations.client.aspect;
+
+import java.time.Duration;
+import java.time.LocalTime;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+
+@Aspect
+public class LoggingAspect {
+	
+	@Around("execution(* com.operations.client.service.*.*())")
+	public void logEachMethodsTime(ProceedingJoinPoint joinPoint) throws Throwable{
+		
+		LocalTime beforeEntring = LocalTime.now();
+		System.out.println("Entering Method: "+beforeEntring);
+		joinPoint.proceed();
+		LocalTime afterExiting = LocalTime.now();
+		System.out.println("Exiting Method: "+afterExiting);
+		System.out.println("Total Time Taken: "+Duration.between(afterExiting, beforeEntring).getSeconds());
+		
+	}
+
+}

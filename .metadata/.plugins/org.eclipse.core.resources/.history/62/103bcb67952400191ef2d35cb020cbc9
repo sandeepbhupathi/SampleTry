@@ -1,0 +1,19 @@
+package com.operations.client;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class OperationsConsumerApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(OperationsConsumerApplication.class, args);
+	}
+	
+	@Bean
+	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+		return builder.build();
+	}
+
+}
+

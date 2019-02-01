@@ -1,0 +1,51 @@
+package com.operations.client.service;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.IntStream;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.operations.client.dto.ClientOperationResponse;
+
+@Service
+public class OperationService {
+
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	public int performAddOperation(int noOfOperations) {
+		int finalSum=0;	
+		
+		IntStream.range(1, noOfOperations+1).forEach(System.out::println);
+		
+		return finalSum;
+	}
+	
+	public int invokeAddService(int noOfEach) {
+		String requestURL = "http://localhost:9090/operations/add/{baseNo}/{noOfOperation}";
+		Map<String, String> mapParam = new HashMap<>();
+		mapParam.put("noOfOperation", "" + noOfEach);
+		mapParam.put("baseNo", "" + noOfEach);
+
+		ResponseEntity<ClientOperationResponse> operationResponse = restTemplate.exchange(requestURL, HttpMethod.GET,
+				httpEntity(), ClientOperationResponse.class, mapParam);
+		return operationResponse.getBody().getResponseRes();
+	}
+
+	private HttpEntity<String> httpEntity() {
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+	    HttpEntity <String> entity = new HttpEntity<String>(headers);
+		return entity;
+	}
+
+}

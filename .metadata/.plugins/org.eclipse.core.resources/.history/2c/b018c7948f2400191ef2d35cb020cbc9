@@ -1,0 +1,8 @@
+package com.operations.client.dto;
+
+public class OperationsResponse {
+	private String operationName;
+	private int noOfOperations;
+	
+
+}

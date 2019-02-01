@@ -1,0 +1,10 @@
+package com.operations.service.dto;
+
+public class OperationResponse {
+	
+	private String operation;
+	private int responseRes;
+	
+	
+
+}

@@ -1,0 +1,15 @@
+package com.operations.client.aspect;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+
+@Aspect
+public class LoggingAspect {
+	
+	@Around("execution(* com.operations.client.service.*.*())")
+	public void logEachMethodsTime(JoinPoint joinPoint){
+		
+	}
+
+}

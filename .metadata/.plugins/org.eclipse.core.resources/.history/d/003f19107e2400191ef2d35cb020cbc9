@@ -1,0 +1,16 @@
+package com.operations.service.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping(path="firstService")
+public class OperationsController {
+
+	@RequestMapping(path="/hi")
+	public String sayHi(){
+		return "Hello";
+	}
+	
+	
+}

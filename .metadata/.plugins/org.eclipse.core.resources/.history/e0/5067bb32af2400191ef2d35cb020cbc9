@@ -1,0 +1,5 @@
+package com.operations.client.exception;
+
+public class IlligalArgsException extends Exception {
+
+}

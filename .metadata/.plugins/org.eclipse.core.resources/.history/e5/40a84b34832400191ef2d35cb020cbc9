@@ -1,0 +1,29 @@
+package com.operations.service.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.operations.service.dto.OperationResponse;
+
+@RestController
+public class OperationsController {
+
+	@RequestMapping(path="/hi")
+	public String sayHi(){
+		return "Hello";
+	}
+	
+	@RequestMapping(path="/operations/{opName}/{baseNo}/{noOfOperation}",produces=MediaType.APPLICATION_JSON)
+	public ResponseEntity<OperationResponse> perfromOperations(@PathVariable("opName") String operationName, 
+			@PathVariable("baseNo") int baseNumber , @PathVariable("noOfOperation") int noOfOperations){
+		
+		int responseRes = 0;
+		
+		return new ResponseEntity<OperationResponse>(new OperationResponse(operationName, responseRes), HttpStatus.OK);
+	}
+	
+}

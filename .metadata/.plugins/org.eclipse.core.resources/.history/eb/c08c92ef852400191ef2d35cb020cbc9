@@ -1,0 +1,19 @@
+package com.operations.service.dto;
+
+import org.springframework.boot.jackson.JsonComponent;
+
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+public class OperationResponse {
+	
+	
+	private String operation;
+	private int responseRes;
+	public OperationResponse(String operation, int responseRes) {
+		this.operation = operation;
+		this.responseRes = responseRes;
+	}
+	
+	
+	
+
+}

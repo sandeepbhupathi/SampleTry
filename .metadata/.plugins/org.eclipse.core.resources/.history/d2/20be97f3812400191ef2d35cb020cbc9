@@ -1,0 +1,5 @@
+package com.operations.service.dto;
+
+public class OperationResponse {
+
+}

@@ -1,0 +1,5 @@
+package com.operations.client.exception;
+
+public class NegativeNumberException extends Exception{
+
+}

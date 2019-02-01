@@ -1,0 +1,7 @@
+package com.operations.client.controlleradvice;
+
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+public class AppResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+
+}

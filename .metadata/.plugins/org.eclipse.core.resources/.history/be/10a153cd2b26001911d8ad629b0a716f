@@ -1,0 +1,80 @@
+package com.operations.client.consumer;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.operations.client.dto.ServerOperationsResponse;
+import com.operations.client.exception.IlligalArgsException;
+import com.operations.client.exception.NegativeNumberException;
+import com.operations.client.service.OperationService;
+
+@RestController
+public class ConsumerSample {
+
+	@Autowired
+	private OperationService operationService;
+	
+	@RequestMapping(path="/testAddOperation",produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ServerOperationsResponse> performAddOperation(@RequestParam("noOfOperations") int noOfOperations,
+			@RequestParam("typeOfOperation") String typeOfOperation) {
+		if(!typeOfOperation.toUpperCase().equalsIgnoreCase("ADD")){
+			throw new IlligalArgsException();
+		}
+		
+		if(noOfOperations<0){
+			throw new NegativeNumberException();
+		}
+		
+		return new ResponseEntity<ServerOperationsResponse>(
+				new ServerOperationsResponse("ADD", noOfOperations, operationService.performAddOperation(noOfOperations)),
+				HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(path="/testMutiThreadAddOperation",produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ServerOperationsResponse> performMultiThreadAddOperation(@RequestParam("noOfOperations") int noOfOperations,
+			@RequestParam("typeOfOperation") String typeOfOperation) throws InterruptedException {
+		if(!typeOfOperation.toUpperCase().equalsIgnoreCase("ADD")){
+			throw new IlligalArgsException();
+		}
+		
+		if(noOfOperations<0){
+			throw new NegativeNumberException();
+		}
+		
+		return new ResponseEntity<ServerOperationsResponse>(
+				new ServerOperationsResponse("ADD", noOfOperations, operationService.performMultiThreadAddOperation(noOfOperations)),
+				HttpStatus.OK);
+	}
+	
+	@RequestMapping(path="/testParllelAddOperation",produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ServerOperationsResponse> performParllelAddOperation(@RequestParam("noOfOperations") int noOfOperations,
+			@RequestParam("typeOfOperation") String typeOfOperation) throws InterruptedException {
+		if(!typeOfOperation.toUpperCase().equalsIgnoreCase("ADD")){
+			throw new IlligalArgsException();
+		}
+		
+		if(noOfOperations<0){
+			throw new NegativeNumberException();
+		}
+		
+		return new ResponseEntity<ServerOperationsResponse>(
+				new ServerOperationsResponse("ADD", noOfOperations, operationService.performParllelStramsAddOperation(noOfOperations)),
+				HttpStatus.OK);
+	}
+	
+	@RequestMapping(path="/testOne")
+	public int testServiceInvoke(@RequestParam("noOfOperations") int noOfOperations){
+		return operationService.getAdder(noOfOperations);
+	}
+	
+	@RequestMapping(path="/sayHi")
+	public String testHi(@RequestParam("name") String name){
+		return "Hello "+name;
+	}
+}

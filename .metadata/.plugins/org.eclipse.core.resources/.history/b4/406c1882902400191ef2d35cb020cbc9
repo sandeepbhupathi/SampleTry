@@ -1,0 +1,25 @@
+package com.operations.client.consumer;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.operations.client.dto.OperationsResponse;
+import com.operations.client.service.OperationService;
+
+@RestController
+public class ConsumerSample {
+
+	@Autowired
+	private OperationService operationService;
+	
+	@RequestMapping(path="/testAddOperation",produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<OperationsResponse> performAddOperation(@RequestParam("noOfOperations") int noOfOperations){
+	
+		return new ResponseEntity<OperationsResponse>(new OperationsResponse("ADD",noOfOperations,operationService.performAddOperation(noOfOperations)),HttpStatus.OK);
+	}
+}

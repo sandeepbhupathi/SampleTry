@@ -1,0 +1,15 @@
+package com.operations.client.dto;
+
+public class ServerOperationsResponse {
+	private String operationName;
+	private int noOfOperations;
+	private int finalOperationValue;
+	public ServerOperationsResponse(String operationName, int noOfOperations, int finalOperationValue) {
+		this.operationName = operationName;
+		this.noOfOperations = noOfOperations;
+		this.finalOperationValue = finalOperationValue;
+	}
+	
+	
+
+}

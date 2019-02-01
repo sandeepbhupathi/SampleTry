@@ -1,0 +1,5 @@
+package com.operations.client.aspect;
+
+public class LoggingAspect {
+
+}

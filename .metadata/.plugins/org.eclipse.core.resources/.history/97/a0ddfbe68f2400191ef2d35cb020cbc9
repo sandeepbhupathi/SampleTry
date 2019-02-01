@@ -1,0 +1,20 @@
+package com.operations.client.consumer;
+
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.operations.client.dto.OperationsResponse;
+
+@RestController
+public class ConsumerSample {
+
+	
+	@RequestMapping(path="/testAddOperation",produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<OperationsResponse> performAddOperation(@RequestParam("noOfOperations") int noOfOperations){
+		
+		return new ResponseEntity<OperationsResponse>()
+	}
+}
